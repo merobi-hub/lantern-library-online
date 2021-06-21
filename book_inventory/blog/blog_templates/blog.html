@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+
+
+{% if current_user.is_authenticated %} 
+<div class="home-container">
+    <div class="container" id="blog-section-container">
+        <div class="row" id="blog-section-row">
+            <div class="col-xs-12 col-sm-12" id="blog-section-title-div">
+                <h1 class="blog-title">Blog</h1>
+                <a href="{{ url_for('lblog.createpost') }}" class="btn btn-primary" id="blog-button"><h3>Write a post</h3></a>
+            </div>
+            <div class="col-xs-12 col-sm-12" id="blog-cards">
+                {% for post in posts %}
+                    <div class="card" style="width: 37.5rem;" id="blog-card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ post.title }}</h5>   
+                            <h5 class="card-text">{{ post.content }}</h5>
+                            <h6 class="card-text">{{ post.email }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Date & time: {{ post.date_created }}</h6>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>            
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="home-container">
+    <div class="container" id="blog-section-container">
+        <div class="row" id="blog-section-row">
+            <div class="col-xs-12 col-sm-12" id="blog-section-title-div">
+                <h3 class="blog-title">Library Blog</h3>
+                <h4>Log in to see/make posts!</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endif %}
+
+{% endblock content %}

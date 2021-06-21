@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!--Flask flashed msgs to user-->
+<div class="container" id="home-container">
+    <div class="container" id="books-container">
+        <div class="container">
+            {% with messages = get_flashed_messages(with_categories = true) %}
+                {% if messages %}
+                    {% for cat,msg in messages %}
+                        {% if cat == 'user-created' %}
+                            <div class="alert alert-success">
+                                {{ msg }}
+                                <button type="button" class="close" data-dismiss = "alert">&times;</button>
+                            </div>
+                        {% elif cat == 'auth-success' %}
+                            <div class="alert alert-success">
+                                {{ msg }}
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-xs-12" id="add-book-cols">
+                <h1 class="add-book-title">Add a Book to the Catalog</h1>
+                <form method="POST">
+                    {{ form.hidden_tag() }} 
+                    <div class="form-group" id="add-book-form">
+                        <fieldset id="add-book-fieldset">
+                            {{ form.author.label }}
+                            {{ form.author(class = "form-control", placeholder = "Thomas De Quincey")}}
+                        </fieldset>
+                        <fieldset>
+                            {{ form.title.label }}
+                            {{ form.title(class = "form-control", placeholder = "Confessions of an English Opium-eater")}}
+                        </fieldset>
+                        
+                        <!--submit button-->
+                        {{ form.submit_button(class= "btn btn-primary btn-block") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+    
+{% endblock content %}

@@ -1,0 +1,72 @@
+{% extends 'base.html' %} 
+
+{% block content %} 
+
+<!--Flask flashed msgs to user-->
+<div class="home-container">
+
+    <main class="container" id="books-container">
+        <div class="container">
+            {% with messages = get_flashed_messages(with_categories = true) %}
+                {% if messages %}
+                    {% for cat,msg in messages %}
+                        {% if cat == 'user-created' %}
+                            <div class="alert alert-success">
+                                {{ msg }}
+                                <button type="button" class="close" data-dismiss = "alert">&times;</button>
+                            </div>
+                        {% elif cat == 'auth-success' %}
+                            <div class="alert alert-success">
+                                {{ msg }}
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+
+            <div class="container" id="catalog-title-container">
+                <div class="row" id="catalog-top-row">
+                    <div class="col-xs-12 col-sm-12" id="catalog-title">
+                        <h1>Library Catalog</h1>
+                        <a href="{{ url_for('catalog.addbook') }}" class="btn btn-primary" id="catalog-title-button"><h3>Add a Book</h3></a>
+                        <!-- <h6>Click on Add Your Donation to add a donation to the catalog.</h6>t
+                        <h6>Click on Remove to update the catalog when you take book.</h6> -->
+                    </div>
+                </div>
+            </div>
+            {% for book in books %}
+            <div class="row" id="card-row">
+                <div class="card" style="max-width: 37.5rem;">
+                    <div class="row g-0">
+                        
+                            <div class="col-md-4">
+                                <img src="{{ book.image }}" id="bookcover-thumbnail" alt="bookcover thumbnail">    
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ book.title }}</h5>
+                                    <h6 class="card-subtitle">by {{ book.author }}</h6>
+                                    <h6 class="card-text mb-2 text-muted">{{ book.publisher }}</h6>
+                                    <p class="card-text">{{ book.description }}</p>
+                                    <h6 class="card-text">{{ book.genre }}</h6>
+                                    <h6 class="card-text">{{ book.pub_date }}</h6>
+                                    <h6 class="card-text">Note: edition in library may differ</h6>
+                                    <a href="{{ url_for('catalog.deletebook', id=book.id, title=book.title) }}" class="btn btn-primary" id="card-button">Remove</a>
+                                    <a href="{{ book.more_info }}">More info</a>
+                                </div>
+                            </div>
+                            
+                        
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </main>
+    
+</div>
+
+{% endblock content %}

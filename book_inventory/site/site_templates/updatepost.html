@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" id="home-container">
+    <div class="container" id="books-container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12" id="edit-post-title">
+                <h1>Edit Blog Post</h1>
+            </div>
+            <div class="col-xs-12 col-sm-12" id="create-post-cols">
+                <form  method="POST">
+                    {{ form.hidden_tag() }}
+                    <div class="form-group" id="edit-post-form">
+                        <fieldset>
+                            {{ form.title.label }}
+                            {{ form.title(class="form-control", placeholder=old_title)}}
+                        </fieldset>
+                        <fieldset>
+                            {{ form.content.label }}
+                            {{ form.content(class="form-control", placeholder=old_content)}}
+                        </fieldset>
+                        {{ form.submit_button(class="btn btn-primary btn-block") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

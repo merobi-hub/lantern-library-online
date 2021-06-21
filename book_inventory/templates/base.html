@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="Description" content="Enter your description here"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css"> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<link rel="stylesheet" href="../static/css/main.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+      $(".close").click(function(){
+        $(".alert").hide(1000);
+      });
+    });
+    </script>
+<title>Lantern Free Library</title>
+</head>
+<body>
+  <div class="container" id="main-container">
+    <!--Nav area-->
+    <nav class="top-nav">
+
+        <!--Nav items-->
+        <div class="container" id="nav-container">
+          <div class="row" id="nav-row">
+            {% if current_user.is_authenticated %} 
+            
+              <div class="col-sm" id="nav-col">
+                <a href="{{ url_for('site.home') }}" id="nav-link">
+                  <p>Home</p>
+                </a>
+              </div>
+              <div class="col-sm" id="nav-col">
+                <a href="{{ url_for('site.about') }}" id="nav-link">
+                  <p>About</p>
+                </a>
+              </div>
+              <div class="col-sm" id="nav-col">
+                <a href="{{ url_for('catalog.books') }}" id="nav-link">
+                  <p>Catalog</p>
+                </a>
+              </div>
+              <div class="col-sm" id="nav-col">
+                <a href="{{ url_for('lblog.blog') }}" id="nav-link">
+                  <p>Blog</p>
+                </a>
+              </div>
+              <div class="col-sm" id="nav-col">
+                <a href="{{ url_for('site.profile') }}" id="nav-link">
+                  <p>Profile</p>
+                </a>
+              </div>
+              <div class="col-sm" id="nav-col">
+                <a href="{{ url_for('auth.signout') }}" id="nav-link">
+                  <p>Sign out</p>
+                </a>
+              </div>
+            {% else %}  
+              <div class="col-sm" id="nav-col">
+                <a href="{{ url_for('site.home') }}" id="nav-link">
+                  <p>Home</p>
+                </a>
+              </div>
+              <div class="col-sm" id="nav-col">
+                <a href="{{ url_for('site.about') }}" id="nav-link">
+                  <p>About</p>
+                </a>
+              </div>
+              <div class="col-sm" id="nav-col">
+                <a href="{{ url_for('catalog.books') }}" id="nav-link">
+                  <p>Catalog</p>
+                </a>
+              </div>
+              <div class="col-sm" id="nav-col">
+                <a href="{{ url_for('lblog.blog') }}" id="nav-link">
+                  <p>Blog</p>
+                </a>
+              </div>
+              <div class="col-sm" id="nav-col">
+                <a href="{{ url_for('auth.signin') }}" id="nav-link">
+                  <p>Sign in</p>
+                </a>
+              </div>
+              <div class="col-sm" id="nav-col">
+                <a href="{{ url_for('auth.signup') }}" id="nav-link">
+                  <p>Sign up</p>
+                </a>
+              </div>
+          </div>
+        </div>
+
+    </nav>
+    <!--End of nav-->
+    {% endif %}
+    {% block content %} 
+    {% endblock content %} 
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.min.js"></script> -->
+</div>
+</body>
+</html>

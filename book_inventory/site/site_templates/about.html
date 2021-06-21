@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" id="home-container">
+    <div class="container" id="books-container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12" id="edit-book-title">
+                <h1>About</h1>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6" id="about-text">
+                <p>
+                    Lantern Free Library Online provides a way for users of the 
+                    little free library on Lantern Lane in Barrington, RI, to see
+                    the current inventory before they visit. Users can also track
+                    their donations and share information about books or other
+                    topics on the blog. 
+                </p>
+                <h3 class="about-heading">How It Works</h3>
+                <p>
+                    The <a href="{{ url_for('catalog.books') }}">catalog</a> depends 
+                    on user input about donations and receipts. When donating, all a 
+                    user needs to do is click on the "Add a Book" button in the 
+                    catalog and enter the author and title. The app adds the book to 
+                    the inventory and uses the author/title information to search a 
+                    database for additional metadata about the title, such as the 
+                    publication date and a description of the book. This data may
+                    not accurately describe the edition in the library, but users
+                    can edit the records for their donations in the 
+                    <a href="{{ url_for('site.profile')}}">profile</a> section 
+                    if they wish. 
+                </p>
+                <p>
+                    When "borrowing" a book, all a user needs to do is click on the 
+                    "Remove" button on a title in the catalog. This removes the book 
+                    from the inventory.
+                </p>
+                <h3 class="about-heading">Tech Specs</h3>
+                <p>
+                    Lantern Free Library Online is a Python Web app on a Flask framework
+                    with a Gunicorn server and a SQLAlchemy/psycopg2 backend. Authorization 
+                    is secured by Werkzeug encryption. Urllib and regex facilitate the 
+                    app's interaction with the Google Books API. On the frontend, Flask 
+                    WTF handles the forms, and Jinja templates and Bootstrap 4.0 
+                    components (cards, rows, and columns) supplement the HTML/CSS. During
+                    development, Virtual Studio Code and PGAdmin were used to write the 
+                    code and create the database, respectively.
+                </p>
+                <h3 class="about-heading">Contact</h3>
+                <p>
+                    Questions, concerns or suggestions? Email 
+                    <a href="emailto:merobi@gmail.com"><nobr>Michael Robinson</nobr></a>. 
+                    Also, check out the code and follow him on Github! 
+                </p>
+
+            </div>
+{% endblock content %}
+      

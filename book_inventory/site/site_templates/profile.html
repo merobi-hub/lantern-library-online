@@ -1,0 +1,86 @@
+{% extends 'base.html' %} 
+
+{% block content %} 
+
+<!--Flask flashed msgs to user-->
+<div class="container" id="home-container">
+    <div class="container" id="books-container">
+        <div class="container">
+            {% with messages = get_flashed_messages(with_categories = true) %}
+                {% if messages %}
+                    {% for cat,msg in messages %}
+                        {% if cat == 'user-created' %}
+                            <div class="alert alert-success">
+                                {{ msg }}
+                                <button type="button" class="close" data-dismiss = "alert">&times;</button>
+                            </div>
+                        {% elif cat == 'auth-success' %}
+                            <div class="alert alert-success">
+                                {{ msg }}
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+
+
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12" id="donations-title">
+                    <h1>Your Donations Currently in the Library</h1>
+                    <p class="list-group">
+                        User: {{ current_user.email }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    {% for user_donation in user_donations %}
+            <div class="row" id="card-row">
+                <div class="col-xs-12 col-sm-12" id="card-cols">
+                    <div class="card" style="max-width: 37.5rem;">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="{{ user_donation.image }}" id="bookcover-thumbnail" alt="bookcover thumbnail">    
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ user_donation.title }}</h5>
+                                    <h6 class="card-subtitle">by {{ user_donation.author }}</h6>
+                                    <h6 class="card-text mb-2 text-muted">{{ user_donation.publisher }}</h6>
+                                    <p class="card-text">{{ user_donation.description }}</p>
+                                    <h6 class="card-text">{{ user_donation.genre }}</h6>
+                                    <h6 class="card-text">{{ user_donation.pub_date }}</h6>
+                                    <h6 class="card-text">Note: edition in library may differ</h6>
+                                    <a href="{{ url_for('site.updatebook', id=user_donation.id, author=user_donation.author, title=user_donation.title, publisher=user_donation.publisher, description=user_donation.description, genre=user_donation.genre, pub_date=user_donation.pub_date) }}" class="btn btn-primary" id="card-button">Edit</a>
+                                    <a href="{{ user_donation.more_info }}">More info</a>
+                                </div>
+                            </div>    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        <div class="container" id="blog-container">
+            <div class="row" id="blog-row">
+                <div class="col-xs-12 col-sm-12" id="blog-cards">
+                    <h1 class="blog-section-title">Your Blog Posts</h1>
+                        {% for user_post in user_posts %}
+                            <div class="card" style="max-width: 37.5rem;" id="blog-card">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ user_post.title }}</h5>
+                                    <h6 class="card-text">{{ user_post.content }}</h6>
+                                    <h6 class="card-text">{{ user_post.date_created }}</h6>
+                                    <a href="{{ url_for('site.updateblog', id=user_post.id, content=user_post.content, title=user_post.title) }}" class="btn btn-primary" id="edit-button">Edit</a>
+                                    <a href="{{ url_for('site.deletepost', id=user_post.id) }}" class="btn btn-warning">Delete</a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %} 

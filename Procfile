@@ -1,0 +1,1 @@
+web: gunicorn car_api:app --preload --timeout 60
