@@ -233,6 +233,10 @@ body {
     font-family: monospace
 }
 
+#profile-button {
+    margin-top: 2vh
+}
+
 #card-cols {
     width: 100%;
     min-width: 100%;
