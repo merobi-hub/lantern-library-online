@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from book_inventory.models import User, db, Post, Book
 from flask_login import login_required, current_user
 from book_inventory.forms import BlogPostForm
@@ -15,12 +15,23 @@ def blog():
 @login_required
 def createpost():
     form = BlogPostForm()
-    if request.method == 'POST' and form.validate():
-        post = form.content.data
-        title = form.title.data
-        email = current_user.email
-        post = Post(title, post, email)
-        db.session.add(post)
-        db.session.commit()
-        return redirect(url_for('lblog.blog'))
+
+    try:
+
+        if request.method == 'POST' and form.validate_on_submit():
+            post = form.content.data
+            title = form.title.data
+            email = current_user.email
+            post = Post(title, post, email)
+            db.session.add(post)
+            db.session.commit()
+
+            flash(f'Post created successfully.', 'user-created')
+
+            return redirect(url_for('lblog.blog'))
+
+    except:
+        raise Exception("That didn't work. Please try again.")
+
+
     return render_template('createpost.html', form = form)
