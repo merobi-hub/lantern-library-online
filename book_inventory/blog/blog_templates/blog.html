@@ -8,6 +8,28 @@
 
 {% if current_user.is_authenticated %} 
 <div class="home-container">
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories = true) %}
+            {% if messages %}
+                {% for cat,msg in messages %}
+                    {% if cat == 'user-created' %}
+                        <div class="alert alert-success">
+                            {{ msg }}
+                            <button type="button" class="close" data-dismiss = "alert">&times;</button>
+                        </div>
+                    {% elif cat == 'auth-success' %}
+                        <div class="alert alert-success">
+                            {{ msg }}
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+
+
     <div class="container" id="blog-section-container">
         <div class="row" id="blog-section-row">
             <div class="col-xs-12 col-sm-12" id="blog-section-title-div">
