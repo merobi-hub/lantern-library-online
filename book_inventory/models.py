@@ -49,7 +49,7 @@ class Post(db.Model, UserMixin):
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.now)
     email = db.Column(db.String, db.ForeignKey('user.email'), nullable = False)
 
-    def __init__(self, content, title, email, id = ''):
+    def __init__(self, title, content, email, id = ''):
         self.id = self.set_id()
         self.title = title
         self.content = content

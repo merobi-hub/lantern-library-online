@@ -33,5 +33,4 @@ def createpost():
     except:
         raise Exception("That didn't work. Please try again.")
 
-
     return render_template('createpost.html', form = form)
