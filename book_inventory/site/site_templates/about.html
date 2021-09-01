@@ -10,10 +10,13 @@
             <div class="col-xs-12 col-sm-12 col-md-6" id="about-text">
                 <p>
                     Lantern Free Library Online provides a way for users of the 
-                    little free library on Lantern Lane in Barrington, RI, to see
+                    Little Free Library® on Lantern Lane in Barrington, RI, to see
                     the current inventory before they visit. Users can also track
                     their donations and share information about books or other
                     topics on the <a href="{{ url_for('lblog.blog')}}"><b>blog</b></a>. 
+                    Note: Little Free Library® is a trademark of the Little Free
+                    Library non-profit organization, which does not sponsor, authorize
+                    or endorse this app.
                 </p>
                 <h3 class="about-heading">How It Works</h3>
                 <p>
@@ -37,12 +40,12 @@
                 <h3 class="about-heading">Tech Specs</h3>
                 <p>
                     Lantern Free Library Online is a Python Web app on a Flask framework
-                    with a Gunicorn server and a SQLAlchemy/psycopg2 backend. Authorization 
-                    is secured by Werkzeug encryption. Urllib and regex facilitate the 
-                    app's interaction with the Google Books API. On the frontend, Flask 
-                    WTF handles the forms, and Jinja templates and Bootstrap 4.0 
-                    components (cards, rows, and columns) supplement the HTML/CSS. During
-                    development, Virtual Studio Code and PGAdmin were used to write the 
+                    with a Gunicorn server and a SQLAlchemy/Psycopg2 backend. Werkzeug 
+                    encryption secures user login information. URLLib and Regex facilitate the 
+                    app's interaction with the Google Books API. On the front end, Flask 
+                    WTF handles the forms, and Jinja2 templates and Bootstrap 4.0 
+                    components (cards, rows, and columns) supplement the HTML5/CSS3. During
+                    development, Virtual Studio Code and PGAdmin4 were used to write the 
                     code and create the database, respectively.
                 </p>
                 <h3 class="about-heading">Contact</h3>
