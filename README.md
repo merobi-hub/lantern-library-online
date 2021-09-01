@@ -36,27 +36,27 @@ Flask Login protects certain app routes, including the form for adding a book.
 
 Flask Flash messages inform the user of a completed login, successful catalog entry, unsuccessful API request and other events.
 
-![add a book form](README_images/addbook.png)
+![add a book form](README_images/lantern_addbook.png)
 
 The forms, built using Flask WTF, feature global CSRF protection.
 
-![book entry](README_images/book.png)
+![book entry](README_images/lantern_book.png)
 
 Catalog records display user-generated metadata (the title and author) supplemented by data from Google's API. To update the catalog after removing a book from the LFL, a user simply clicks the blue "Remove" button. 
 
-![profile page](README_images/profile.png)
+![profile page](README_images/lantern_profile.png)
 
 A user's profile page contains all of that user's donations currently in the catalog, as well as all of that user's blog posts. From the profile, a user can edit book records and blog posts.
 
-![blog page](README_images/blog.png)
+![blog page](README_images/lantern_blog.png)
 
 The blog presents each post's title, author, date and time.
 
-![api no data msg](README_images/apierrmsg.png)
+![api no data msg](README_images/lantern_apierrmsg.png)
 
 If a user's catalog entry yields no result from a search of the API, a Flash message notifies the user and sends them to their profile, where they can add more metadata if they wish.
 
-![edit book record form](README_images/bookform.png)
+![edit book record form](README_images/lantern_editbook.png)
 
 The form for editing a book record includes all the fields used in API requests in case a user wishes to correct any mismatches between API data and their particular edition of a book.
 
