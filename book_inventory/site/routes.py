@@ -16,6 +16,7 @@ def about():
 @site.route('/profile')
 @login_required
 def profile():
+    """User profile containing book donations and blog posts."""
     user_donations = Book.query.filter_by(user_id=current_user.id).all()
     user_posts = Post.query.filter_by(email=current_user.email).all()
     return render_template('profile.html', user_donations = user_donations, user_posts = user_posts)
@@ -23,6 +24,9 @@ def profile():
 @site.route('/updatebook', methods = ['GET', 'POST'])
 @login_required
 def updatebook():
+    """
+    Returns pre-filled form for editing a catalog entry and processes inputs.
+    """
     form = UpdateBookForm()
     id = request.args.get('id', None)
     title = request.args.get('title', None)
@@ -66,6 +70,9 @@ def updatebook():
 @site.route('/updatepost', methods = ['GET', 'POST'])
 @login_required
 def updateblog():
+    """
+    Returns pre-filled form for editing a blog post and processes inputs.
+    """
     form = BlogPostForm()
     id = request.args.get('id', None)
     old_content = request.args.get('content', None)
@@ -86,11 +93,17 @@ def updateblog():
     except:
         raise Exception("That didn't work. Please try again.")
 
-    return render_template('updatepost.html', form=form, old_content=old_content, old_title=old_title)
+    return render_template(
+        'updatepost.html', 
+        form=form, 
+        old_content=old_content, 
+        old_title=old_title
+        )
 
 @site.route('/deletepost', methods = ['GET', 'POST'])
 @login_required
 def deletepost():
+    """Deletes a blog post."""
     id = request.args.get('id', None)
     Post.query.filter_by(id=id).delete()
     db.session.commit()

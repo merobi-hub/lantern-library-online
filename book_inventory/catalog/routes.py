@@ -13,12 +13,14 @@ catalog = Blueprint('catalog', __name__, template_folder='catalog_templates')
 
 @catalog.route('/books')
 def books():
+    """Retrieves and returns all books in catalog."""
     books = Book.query.all()
     return render_template('books.html', books = books)
 
 @catalog.route('/addbook', methods = ['GET', 'POST'])
 @login_required
 def addbook():
+    """Adds book to catalog."""
     form = AddBookForm()
     try:
         if request.method == 'POST' and form.validate_on_submit():
@@ -28,7 +30,9 @@ def addbook():
 
             try:
                 # Access API using form data
-                response = requests.get(f'https://www.googleapis.com/books/v1/volumes?q=intitle:{title}+inauthor:{author}&key={credentials.API_KEY}').json()
+                response = requests.get(
+                    f'https://www.googleapis.com/books/v1/volumes?q=intitle:{title}+inauthor:{author}&key={credentials.API_KEY}'
+                    ).json()
 
                 publisher = response['items'][0]['volumeInfo']['publisher']
                 description = response['items'][0]['volumeInfo']['description']
@@ -55,8 +59,8 @@ def addbook():
                     )
             
                 print(response.keys())
-                print(response['items'][0]['selfLink']) #works for url
-                print(response['items'][0]['volumeInfo']) #works for mucho info!
+                print(response['items'][0]['selfLink'])
+                print(response['items'][0]['volumeInfo'])
 
                 db.session.add(book)
                 db.session.commit()
@@ -100,6 +104,7 @@ def addbook():
 @catalog.route('/deletebook', methods = ['GET', 'POST'])
 @login_required
 def deletebook():
+    """Removes book from catalog."""
     id = request.args.get('id', None)
     title = request.args.get('title', None)
     Book.query.filter_by(id=id).delete()

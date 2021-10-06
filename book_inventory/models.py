@@ -103,14 +103,44 @@ class Book(db.Model, UserMixin):
     def set_id(self):
         return str(uuid.uuid4())
 
+class BookHistory(db.Model, UserMixin):
+    id = db.Column(db.String, primary_key = True)
+    author = db.Column(db.String(150))
+    title = db.Column(db.String(300))
+    publisher = db.Column(db.String(150), nullable = True)
+    description = db.Column(db.String(500), nullable = True)
+    genre = db.Column(db.String(50), nullable = True)
+    image = db.Column(db.String(200), nullable = True)
+    pub_date = db.Column(db.String(10), nullable = True)
+    more_info = db.Column(db.String(200), nullable = True)
+    user_id = db.Column(db.String, db.ForeignKey('user.id'), nullable = False)
 
-# #API schema via marshmallow
-# class BookSchema(ma.Schema):
-#     class Meta:
-#         fields = []
+    def __init__(
+        self, 
+        author, 
+        title, 
+        publisher,
+        description,
+        genre,
+        image,
+        pub_date,
+        more_info, 
+        user_id, 
+        id = ''
+        ):
+        self.id = self.set_id()
+        self.author = author
+        self.title = title
+        self.publisher = publisher
+        self.description = description
+        self.genre = genre 
+        self.image = image
+        self.pub_date = pub_date
+        self.more_info = more_info
+        self.user_id = user_id
 
-# #singular data point return
-# book_schema = BookSchema()
+    def __repr__(self):
+        return f'{self.title} has been added to the catalog history.'
 
-# #list of objects
-# book_schemas = BookSchema(many=True)
+    def set_id(self):
+        return str(uuid.uuid4())
