@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from book_inventory.models import User, db, Book
+from book_inventory.models import User, db, Book, BookHistory
 from book_inventory.forms import AddBookForm
 # import json
 import requests
@@ -15,7 +15,8 @@ catalog = Blueprint('catalog', __name__, template_folder='catalog_templates')
 def books():
     """Retrieves and returns all books in catalog."""
     books = Book.query.all()
-    return render_template('books.html', books = books)
+    history = BookHistory.query.all()
+    return render_template('books.html', books = books, history = history)
 
 @catalog.route('/addbook', methods = ['GET', 'POST'])
 @login_required
@@ -104,9 +105,38 @@ def addbook():
 @catalog.route('/deletebook', methods = ['GET', 'POST'])
 @login_required
 def deletebook():
-    """Removes book from catalog."""
+    """Removes book from catalog and adds it to history."""
     id = request.args.get('id', None)
     title = request.args.get('title', None)
+
+    # Retrieve db info for title and add to BookHistory table
+    book = Book.query.filter_by(id=id).first()
+    author = book.author
+    title = book.title
+    publisher = book.publisher
+    description = book.description
+    genre = book.genre
+    image = book.image
+    pub_date = book.pub_date
+    more_info = book.more_info
+    user_id = book.user_id
+
+    hist_add = BookHistory(
+        author,
+        title,
+        publisher,
+        description,
+        genre,
+        image,
+        pub_date,
+        more_info,
+        user_id
+    )
+
+    db.session.add(hist_add)
+    db.session.commit()
+
+    # Remove book from Book table
     Book.query.filter_by(id=id).delete()
     db.session.commit()
     flash(f'Thank you! *{title}* has been removed from the catalog.', 'user-created')

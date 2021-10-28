@@ -40,27 +40,45 @@
             <div class="row" id="card-row">
                 <div class="card" style="max-width: 37.5rem;">
                     <div class="row g-0">
-                        
-                            <div class="col-md-4">
-                                <img src="{{ book.image }}" id="bookcover-thumbnail" alt="bookcover thumbnail">    
+                        <div class="col-md-4">
+                            <img src="{{ book.image }}" id="bookcover-thumbnail" alt="bookcover thumbnail">    
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ book.title }}</h5>
+                                <h6 class="card-subtitle">by {{ book.author }}</h6>
+                                <h6 class="card-text mb-2 text-muted">{{ book.publisher }}</h6>
+                                <p class="card-text">{{ book.description }}</p>
+                                <h6 class="card-text">{{ book.genre }}</h6>
+                                <h6 class="card-text">{{ book.pub_date }}</h6>
+                                <h6 class="card-text">Note: edition in library may differ</h6>
+                                <a href="{{ url_for('catalog.deletebook', id=book.id, title=book.title) }}" class="btn btn-primary" id="card-button">Remove</a>
+                                <a href="{{ book.more_info }}">More info</a>
                             </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ book.title }}</h5>
-                                    <h6 class="card-subtitle">by {{ book.author }}</h6>
-                                    <h6 class="card-text mb-2 text-muted">{{ book.publisher }}</h6>
-                                    <p class="card-text">{{ book.description }}</p>
-                                    <h6 class="card-text">{{ book.genre }}</h6>
-                                    <h6 class="card-text">{{ book.pub_date }}</h6>
-                                    <h6 class="card-text">Note: edition in library may differ</h6>
-                                    <a href="{{ url_for('catalog.deletebook', id=book.id, title=book.title) }}" class="btn btn-primary" id="card-button">Remove</a>
-                                    <a href="{{ book.more_info }}">More info</a>
-                                </div>
+                        </div>    
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% for book in history %} 
+            <div class="row" id="card-row">
+                <div class="card" style="max-width: 37.5rem; background-color: darkgray;">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="{{ book.image }}" id="bookcover-thumbnail" alt="bookcover thumbnail">    
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ book.title }}</h5>
+                                <h6 class="card-subtitle">by {{ book.author }}</h6>
+                                <h6 class="card-text mb-2 text-muted">{{ book.publisher }}</h6>
+                                <p class="card-text">{{ book.description }}</p>
+                                <h6 class="card-text">{{ book.genre }}</h6>
+                                <h6 class="card-text">{{ book.pub_date }}</h6>
+                                <h6 class="card-text">Note: edition in library may differ</h6>
+                                <a href="{{ book.more_info }}">More info</a>
                             </div>
-                            
-                        
-                        
-                        
+                        </div>
                     </div>
                 </div>
             </div>
