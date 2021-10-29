@@ -58,10 +58,6 @@ def addbook():
                     more_info,
                     user_id
                     )
-            
-                print(response.keys())
-                print(response['items'][0]['selfLink'])
-                print(response['items'][0]['volumeInfo'])
 
                 db.session.add(book)
                 db.session.commit()
