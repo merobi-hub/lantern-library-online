@@ -178,7 +178,8 @@ body {
 #bookcover-thumbnail {
     width: 12.5rem;
     height: 22rem;
-    object-fit: cover
+    object-fit: cover;
+    filter: brightness(66%);
 }
 
 .card {
