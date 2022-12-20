@@ -144,3 +144,5 @@ class BookHistory(db.Model, UserMixin):
 
     def set_id(self):
         return str(uuid.uuid4())
+
+db.create_all()
