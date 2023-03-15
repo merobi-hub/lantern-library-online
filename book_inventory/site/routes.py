@@ -1,7 +1,9 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
-from book_inventory.models import User, db, Book, Post
-from book_inventory.forms import AddBookForm, UpdateBookForm, BlogPostForm
+from book_inventory.models import Book, Post
+from book_inventory.forms import UpdateBookForm, BlogPostForm
+from sqlalchemy import select
+from book_inventory.database import db_session
 
 site = Blueprint('site', __name__, template_folder='site_templates')
 
@@ -17,7 +19,7 @@ def about():
 @login_required
 def profile():
     """User profile containing book donations and blog posts."""
-    user_donations = Book.query.filter_by(user_id=current_user.id).all()
+    user_donations = select(Book).filter_by(Book.user_id==current_user.id)
     user_posts = Post.query.filter_by(email=current_user.email).all()
     return render_template('profile.html', user_donations = user_donations, user_posts = user_posts)
 
@@ -48,9 +50,12 @@ def updatebook():
                 "pub_date": (form.pub_date.data),
                 "user_id": (current_user.id)
             })
-            db.session.commit()
+            db_session.commit()
 
-            flash(f'Thank you! The record for {form.title.data} has been updated.', 'user-created')
+            flash(
+                f'Thank you! The record for {form.title.data} has been updated.', 
+                'user-created'
+                )
 
             return redirect(url_for('catalog.books'))
     except:
@@ -85,7 +90,7 @@ def updateblog():
                 "content": (form.content.data),
                 "email": (current_user.email)
             })
-            db.session.commit()
+            db_session.commit()
 
             flash(f'The post has been updated.', 'user-created')
 
@@ -106,6 +111,6 @@ def deletepost():
     """Deletes a blog post."""
     id = request.args.get('id', None)
     Post.query.filter_by(id=id).delete()
-    db.session.commit()
+    db_session.commit()
     flash(f'The post has been deleted.', 'user-created')
     return redirect(url_for('site.profile'))

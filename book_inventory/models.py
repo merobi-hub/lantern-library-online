@@ -1,6 +1,10 @@
 from flask_sqlalchemy import SQLAlchemy 
 from datetime import date, datetime 
 import uuid #3 unique user identifier-PK
+from sqlalchemy import select, Column, String, ForeignKey, DateTime
+from book_inventory.database import Base
+
+# engine = create_engine('postgresql://postgres:password@localhost/lib_db', echo=True)
 
 #Adding FLASK security from werkzeug :sha256 encryption
 from werkzeug.security import generate_password_hash, check_password_hash  
@@ -11,23 +15,21 @@ import secrets
 #3 import for flask login class
 from flask_login import UserMixin, LoginManager 
 
-#install marshaller
-from flask_marshmallow import Marshmallow
-
-db = SQLAlchemy() #init db class instance
+# db = SQLAlchemy() #init db class instance
 login_manager = LoginManager() #inst LM class as var
-ma = Marshmallow()
+
 
 @login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(user_id)
+def load_user(user_id: str):
+    return select(User).where(User.id==user_id)
 
-class User(db.Model, UserMixin):
-    id = db.Column(db.String, primary_key = True)
-    email = db.Column(db.String(150), nullable = False, unique = True)
-    password = db.Column(db.String, nullable = False, default = '')
+class User(Base, UserMixin):
+    __tablename__ = 'users'
+    id = Column(String, primary_key = True)
+    email = Column(String(150), nullable = False, unique = True)
+    password = Column(String, nullable = False, default = '')
 
-    def __init__(self, email, id = '', password = ''):
+    def __init__(self, email, password = ''):
         self.id = self.set_id()
         self.email = email
         self.password = self.set_password(password)
@@ -42,14 +44,15 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return f'An account for {self.email} has been created and added to the database.'
 
-class Post(db.Model, UserMixin):
-    id = db.Column(db.String, primary_key = True)
-    title = db.Column(db.String(100))
-    content = db.Column(db.String(300))
-    date_created = db.Column(db.DateTime, nullable=False, default=datetime.now)
-    email = db.Column(db.String, db.ForeignKey('user.email'), nullable = False)
+class Post(Base, UserMixin):
+    __tablename__ = 'posts'
+    id = Column(String, primary_key = True)
+    title = Column(String(100))
+    content = Column(String(300))
+    date_created = Column(DateTime, nullable=False, default=datetime.now)
+    email = Column(String, ForeignKey('users.email'), nullable = False)
 
-    def __init__(self, title, content, email, id = ''):
+    def __init__(self, title, content, email):
         self.id = self.set_id()
         self.title = title
         self.content = content
@@ -61,17 +64,18 @@ class Post(db.Model, UserMixin):
     def set_id(self):
         return str(uuid.uuid4())
 
-class Book(db.Model, UserMixin):
-    id = db.Column(db.String, primary_key = True)
-    author = db.Column(db.String(150))
-    title = db.Column(db.String(300))
-    publisher = db.Column(db.String(150), nullable = True)
-    description = db.Column(db.String(500), nullable = True)
-    genre = db.Column(db.String(50), nullable = True)
-    image = db.Column(db.String(200), nullable = True)
-    pub_date = db.Column(db.String(10), nullable = True)
-    more_info = db.Column(db.String(200), nullable = True)
-    user_id = db.Column(db.String, db.ForeignKey('user.id'), nullable = False)
+class Book(Base, UserMixin):
+    __tablename__ = 'books'
+    id = Column(String, primary_key = True)
+    author = Column(String(150))
+    title = Column(String(300))
+    publisher = Column(String(150), nullable = True)
+    description = Column(String(500), nullable = True)
+    genre = Column(String(50), nullable = True)
+    image = Column(String(200), nullable = True)
+    pub_date = Column(String(10), nullable = True)
+    more_info = Column(String(200), nullable = True)
+    user_id = Column(String, ForeignKey('users.id'), nullable = False)
 
     def __init__(
         self, 
@@ -83,8 +87,7 @@ class Book(db.Model, UserMixin):
         image,
         pub_date,
         more_info, 
-        user_id, 
-        id = ''
+        user_id
         ):
         self.id = self.set_id()
         self.author = author
@@ -103,17 +106,18 @@ class Book(db.Model, UserMixin):
     def set_id(self):
         return str(uuid.uuid4())
 
-class BookHistory(db.Model, UserMixin):
-    id = db.Column(db.String, primary_key = True)
-    author = db.Column(db.String(150))
-    title = db.Column(db.String(300))
-    publisher = db.Column(db.String(150), nullable = True)
-    description = db.Column(db.String(500), nullable = True)
-    genre = db.Column(db.String(50), nullable = True)
-    image = db.Column(db.String(200), nullable = True)
-    pub_date = db.Column(db.String(10), nullable = True)
-    more_info = db.Column(db.String(200), nullable = True)
-    user_id = db.Column(db.String, db.ForeignKey('user.id'), nullable = False)
+class BookHistory(Base, UserMixin):
+    __tablename__ = 'book_history'
+    id = Column(String, primary_key = True)
+    author = Column(String(150))
+    title = Column(String(300))
+    publisher = Column(String(150), nullable = True)
+    description = Column(String(500), nullable = True)
+    genre = Column(String(50), nullable = True)
+    image = Column(String(200), nullable = True)
+    pub_date = Column(String(10), nullable = True)
+    more_info = Column(String(200), nullable = True)
+    user_id = Column(String, ForeignKey('users.id'), nullable = False)
 
     def __init__(
         self, 
@@ -125,8 +129,7 @@ class BookHistory(db.Model, UserMixin):
         image,
         pub_date,
         more_info, 
-        user_id, 
-        id = ''
+        user_id
         ):
         self.id = self.set_id()
         self.author = author

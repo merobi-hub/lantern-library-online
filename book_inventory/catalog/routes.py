@@ -1,11 +1,11 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from book_inventory.models import User, db, Book, BookHistory
+from book_inventory.models import Book, BookHistory
 from book_inventory.forms import AddBookForm
-# import json
 import requests
-# import urllib
 from book_inventory.hidden import credentials
 import re
+from sqlalchemy import event, select
+from book_inventory.database import db_session
 
 from flask_login import current_user, login_required
 
@@ -13,9 +13,19 @@ catalog = Blueprint('catalog', __name__, template_folder='catalog_templates')
 
 @catalog.route('/books')
 def books():
-    """Retrieves and returns all books in catalog."""
-    books = Book.query.all()
-    history = BookHistory.query.all()
+    """Retrieves all books in catalog."""
+    
+    book_stmt = select(Book).where(Book.id != None)
+    books = []
+    # db_session.execute(book_stmt)
+    # with engine.connect() as conn:
+    for row in db_session.execute(book_stmt):
+        books.append(row)
+    history_stmt = select(BookHistory).where(BookHistory.id != None)
+    history = []
+    # with engine.connect() as conn:
+    for row in db_session.execute(history_stmt):
+        history.append(row)
     return render_template('books.html', books = books, history = history)
 
 @catalog.route('/addbook', methods = ['GET', 'POST'])
@@ -30,7 +40,6 @@ def addbook():
             user_id = current_user.id
 
             try:
-                # Access API using form data
                 response = requests.get(
                     f'https://www.googleapis.com/books/v1/volumes?q=intitle:{title}+inauthor:{author}&key={credentials.API_KEY}'
                     ).json()
@@ -59,10 +68,13 @@ def addbook():
                     user_id
                     )
 
-                db.session.add(book)
-                db.session.commit()
+                db_session.add(book)
+                db_session.commit()
 
-                flash(f'Thank you! A record for *{title}* has been added to the catalog.', 'user-created')
+                flash(
+                    f'Thank you! A record for *{title}* has been added to the catalog.', 
+                    'user-created'
+                    )
                 return redirect(url_for('catalog.books'))
 
             except:
@@ -86,10 +98,13 @@ def addbook():
                     user_id
                 )
 
-                db.session.add(book)
-                db.session.commit()
+                db_session.add(book)
+                db_session.commit()
 
-                flash(f'Thank you for adding *{title}* to the catalog. Metadata about this title could not be found in the API, but you can edit the record below if you wish.', 'user-created')
+                flash(
+                    f'Thank you for adding *{title}* to the catalog. Metadata about this title could not be found in the API, but you can edit the record below if you wish.', 
+                    'user-created'
+                    )
                 return redirect(url_for('site.profile'))
 
     except:
@@ -129,11 +144,11 @@ def deletebook():
         user_id
     )
 
-    db.session.add(hist_add)
-    db.session.commit()
+    db_session.add(hist_add)
+    db_session.commit()
 
     # Remove book from Book table
     Book.query.filter_by(id=id).delete()
-    db.session.commit()
+    db_session.commit()
     flash(f'Thank you! *{title}* has been removed from the catalog.', 'user-created')
     return redirect(url_for('catalog.books'))
