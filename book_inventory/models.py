@@ -1,6 +1,9 @@
 from flask_sqlalchemy import SQLAlchemy 
+from sqlalchemy import create_engine
 from datetime import date, datetime 
 import uuid #3 unique user identifier-PK
+
+db_session = create_engine('postgresql://localhost/lib_db')
 
 #Adding FLASK security from werkzeug :sha256 encryption
 from werkzeug.security import generate_password_hash, check_password_hash  
@@ -11,12 +14,8 @@ import secrets
 #3 import for flask login class
 from flask_login import UserMixin, LoginManager 
 
-#install marshaller
-from flask_marshmallow import Marshmallow
-
 db = SQLAlchemy() #init db class instance
 login_manager = LoginManager() #inst LM class as var
-ma = Marshmallow()
 
 @login_manager.user_loader
 def load_user(user_id):
