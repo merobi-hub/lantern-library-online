@@ -1,9 +1,8 @@
-from flask_sqlalchemy import SQLAlchemy 
-from sqlalchemy import create_engine
+from flask_sqlalchemy import SQLAlchemy, session
+from sqlalchemy import create_engine, event, select
 from datetime import date, datetime 
 import uuid #3 unique user identifier-PK
 
-db_session = create_engine('postgresql://localhost/lib_db')
 
 #Adding FLASK security from werkzeug :sha256 encryption
 from werkzeug.security import generate_password_hash, check_password_hash  
@@ -15,6 +14,7 @@ import secrets
 from flask_login import UserMixin, LoginManager 
 
 db = SQLAlchemy() #init db class instance
+db_session = create_engine('postgresql://localhost/lib_db', echo=True)
 login_manager = LoginManager() #inst LM class as var
 
 @login_manager.user_loader

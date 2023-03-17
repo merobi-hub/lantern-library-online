@@ -1,11 +1,11 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from book_inventory.models import User, db, Book, BookHistory
 from book_inventory.forms import AddBookForm
-# import json
 import requests
-# import urllib
 from book_inventory.hidden import credentials
 import re
+from sqlalchemy import event
+from sqlalchemy.orm import sessionmaker
 
 from flask_login import current_user, login_required
 

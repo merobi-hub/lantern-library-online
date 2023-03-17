@@ -14,7 +14,7 @@ def about():
     return render_template('about.html')
 
 @site.route('/profile')
-@login_required
+# @login_required
 def profile():
     """User profile containing book donations and blog posts."""
     user_donations = Book.query.filter_by(user_id=current_user.id).all()
