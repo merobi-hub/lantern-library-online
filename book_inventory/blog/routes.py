@@ -19,10 +19,10 @@ def createpost():
     try:
 
         if request.method == 'POST' and form.validate_on_submit():
-            post = form.content.data
             title = form.title.data
+            content = form.content.data
             email = current_user.email
-            post = Post(title, post, email)
+            post = Post(title, content, email)
             db.session.add(post)
             db.session.commit()
 

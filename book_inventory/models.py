@@ -55,7 +55,7 @@ class Post(db.Model, UserMixin):
         self.email = email
 
     def __repr__(self):
-        return f'{self.title}\n{self.content}\n{self.user_email}'
+        return f'{self.title}\n{self.content}\n{self.email}'
 
     def set_id(self):
         return str(uuid.uuid4())
