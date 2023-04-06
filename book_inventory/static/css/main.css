@@ -80,7 +80,7 @@ body {
     flex-flow: row wrap;
     align-items: center;
     box-sizing: border-box;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/lanternfreelibrary_close.jpg");
+    /* background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/lanternfreelibrary_close.jpg"); */
     /* background: url("../images/lanternfreelibrary_close.jpg") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -101,7 +101,7 @@ body {
     margin-top: 34vh;
     /* margin-left: 6%; */
     margin-bottom: auto;
-    color: white;
+    color: black;
     z-index: 1
 }
 
@@ -114,19 +114,19 @@ body {
 
 #index-main h5 {
     text-align: center;
-    color: white
+    color: black
 }
 
 .footer {
     text-align: center;
-    color: black;
+    color: white;
     margin-bottom: 1vh;
     margin-top: 50%;
     min-width: 100%
 }
 
 .footer a {
-    color: black
+    color: white
 }
 
 /* Start of books */
@@ -140,7 +140,7 @@ body {
     flex-flow: row wrap;
     align-items: center;
     box-sizing: border-box;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/lanternfreelibrary_close.jpg");
+    /* background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/lanternfreelibrary_close.jpg"); */
     background-attachment: fixed;
     flex-shrink: 0;
     width: 100%;
@@ -151,7 +151,7 @@ body {
 }
 
 #catalog-title {
-    color: white;
+    color: black;
     /* min-width: 37.5rem; */
     text-align: center;
     margin-top: 5vh;
@@ -218,7 +218,7 @@ body {
     flex-flow: row wrap;
     align-items: center;
     box-sizing: content-box;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/lanternfreelibrary_close.jpg");
+    /* background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/lanternfreelibrary_close.jpg"); */
     background-attachment: fixed;
     flex-shrink: 0;
     width: 100%;
@@ -227,7 +227,7 @@ body {
 }
 
 #donations-title {
-    color: white;
+    color: black;
     justify-content: center;
     text-align: center;
     margin-top: 5vh;
@@ -261,7 +261,7 @@ body {
 }
 
 .blog-section-title {
-    color: white;
+    color: black;
     text-align: center;
     font-family: monospace
 }
@@ -275,7 +275,7 @@ body {
     flex-flow: row wrap;
     align-items: center;
     box-sizing: content-box;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/lanternfreelibrary_close.jpg");
+    /* background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/lanternfreelibrary_close.jpg"); */
     background-attachment: fixed;
     flex-shrink: 0;
     width: 100%;
@@ -296,7 +296,7 @@ body {
 .blog-title {
     margin-top: 5vh;
     margin-bottom: 2.5vh;
-    color: white
+    color: black
 }
 
 #blog-section-title-div {
@@ -342,7 +342,7 @@ body {
     height: 100%;
     min-height: 100%;
     z-index: 0;
-    color: white;
+    color: black;
 }
 
 .create-post-title {
@@ -354,7 +354,7 @@ body {
     width: 50%;
     justify-content: center;
     text-align: center;
-    color: white;
+    color: black;
     
 }
 
@@ -375,7 +375,7 @@ body {
     flex-flow: row wrap;
     align-items: center;
     box-sizing: content-box; 
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/lanternfreelibrary_close.jpg");
+    /* background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/lanternfreelibrary_close.jpg"); */
     background-attachment: fixed;
     flex-shrink: 0;
     width: 100%;
@@ -387,7 +387,7 @@ body {
 }
 
 #sign-in-row {
-    color: white;
+    color: black;
     justify-content: center;
     text-align: center;
     margin-bottom: 20%
@@ -407,11 +407,11 @@ body {
 .add-book-title {
     margin-top: 5vh;
     font-family: monospace;
-    color: white;
+    color: black;
 }
 
 #add-book-form {
-    color: white;
+    color: black;
     margin-top: 2vh;
     margin-bottom: 200%
 }
@@ -423,7 +423,7 @@ body {
 }
 
 #edit-book-title {
-    color: white;
+    color: black;
     text-align: center;
     margin-top: 5vh;
     margin-bottom: 2vh;
@@ -436,7 +436,7 @@ body {
 }
 
 #edit-post-title {
-    color: white;
+    color: black;
     margin-top: 5vh;
     margin-bottom: 2vh;
 }
