@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from book_inventory.models import User, db, Post, Book
+from book_inventory.models import db, Post
 from flask_login import login_required, current_user
 from book_inventory.forms import BlogPostForm
 

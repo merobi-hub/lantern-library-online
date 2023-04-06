@@ -26,7 +26,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(150), nullable = False, unique = True)
     password = db.Column(db.String, nullable = False, default = '')
 
-    def __init__(self, email, id = '', password = ''):
+    def __init__(self, email, password = ''):
         self.id = self.set_id()
         self.email = email
         self.password = self.set_password(password)
@@ -82,8 +82,7 @@ class Book(db.Model, UserMixin):
         image,
         pub_date,
         more_info, 
-        user_id, 
-        id = ''
+        user_id
         ):
         self.id = self.set_id()
         self.author = author

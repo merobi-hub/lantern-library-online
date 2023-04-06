@@ -98,7 +98,7 @@ body {
 
 #index-main h1 {
     text-align: center;
-    margin-top: 30vh;
+    margin-top: 34vh;
     /* margin-left: 6%; */
     margin-bottom: auto;
     color: white;
@@ -119,14 +119,14 @@ body {
 
 .footer {
     text-align: center;
-    color: white;
+    color: black;
     margin-bottom: 1vh;
     margin-top: 50%;
     min-width: 100%
 }
 
 .footer a {
-    color: white
+    color: black
 }
 
 /* Start of books */

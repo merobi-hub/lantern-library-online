@@ -1,14 +1,15 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from book_inventory.models import User, db, Book, BookHistory
+from book_inventory.models import db, Book, BookHistory, db_session
 from book_inventory.forms import AddBookForm
 import requests
 from book_inventory.hidden import credentials
 import re
-from sqlalchemy import event
+from sqlalchemy import insert
 from sqlalchemy.orm import sessionmaker
 
 from flask_login import current_user, login_required
 
+Session = sessionmaker(db_session)
 catalog = Blueprint('catalog', __name__, template_folder='catalog_templates')
 
 @catalog.route('/books')
@@ -30,11 +31,10 @@ def addbook():
             user_id = current_user.id
 
             try:
-                # Access API using form data
                 response = requests.get(
                     f'https://www.googleapis.com/books/v1/volumes?q=intitle:{title}+inauthor:{author}&key={credentials.API_KEY}'
                     ).json()
-
+            
                 publisher = response['items'][0]['volumeInfo']['publisher']
                 description = response['items'][0]['volumeInfo']['description']
                 genre = response['items'][0]['volumeInfo']['categories']
@@ -44,29 +44,27 @@ def addbook():
 
                 if len(description) > 500:
                     description = description[:497] + '...'
-                genre = str(genre)
-                genre = re.sub(r"[\([{})\]]", '', genre)
+                genre = re.sub(r"[\([{})\]]", '', str(genre))
 
-                book = Book(
-                    author,  
-                    title, 
-                    publisher, 
-                    description, 
-                    genre,
-                    image,
-                    pub_date,
-                    more_info,
-                    user_id
+                add_book = Book(
+                    author=author,
+                    title=title,
+                    publisher=publisher,
+                    description=description,
+                    genre=genre,
+                    image=image,
+                    pub_date=pub_date,
+                    more_info=more_info,
+                    user_id=user_id
                     )
 
-                db.session.add(book)
-                db.session.commit()
-
+                with Session.begin() as session:
+                    session.add(add_book)
+            
                 flash(f'Thank you! A record for *{title}* has been added to the catalog.', 'user-created')
-                return redirect(url_for('catalog.books'))
-
+           
             except:
-
+                
                 publisher = ''
                 description = ''
                 genre = ''
@@ -74,7 +72,7 @@ def addbook():
                 pub_date = ''
                 more_info = ''
 
-                book = Book(
+                add_book = Book(
                     author,
                     title,
                     publisher,
@@ -84,13 +82,14 @@ def addbook():
                     pub_date,
                     more_info,
                     user_id
-                )
-
-                db.session.add(book)
-                db.session.commit()
+                    )
+            
+                with Session.begin() as session:
+                    session.add(add_book)
 
                 flash(f'Thank you for adding *{title}* to the catalog. Metadata about this title could not be found in the API, but you can edit the record below if you wish.', 'user-created')
-                return redirect(url_for('site.profile'))
+            
+            return redirect(url_for('catalog.books'))
 
     except:
         flash(f"That didn't work. Please try again.")
@@ -129,8 +128,8 @@ def deletebook():
         user_id
     )
 
-    db.session.add(hist_add)
-    db.session.commit()
+    with Session.begin() as session:
+        session.add(hist_add)
 
     # Remove book from Book table
     Book.query.filter_by(id=id).delete()

@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
-from book_inventory.models import User, db, Book, Post
-from book_inventory.forms import AddBookForm, UpdateBookForm, BlogPostForm
+from book_inventory.models import db, Book, Post
+from book_inventory.forms import UpdateBookForm, BlogPostForm
 
 site = Blueprint('site', __name__, template_folder='site_templates')
 
@@ -9,9 +9,9 @@ site = Blueprint('site', __name__, template_folder='site_templates')
 def home():
     return render_template('index.html')
 
-@site.route('/about')
-def about():
-    return render_template('about.html')
+# @site.route('/about')
+# def about():
+#     return render_template('about.html')
 
 @site.route('/profile')
 # @login_required
@@ -35,8 +35,7 @@ def updatebook():
     description = request.args.get('description', None)
     genre = request.args.get('genre', None)
     pub_date = request.args.get('pub_date', None)
-    print(id)
-    print(publisher)
+
     try:
         if request.method == 'POST' and form.validate_on_submit():
             Book.query.filter_by(id=id).update({
