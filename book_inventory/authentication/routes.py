@@ -41,7 +41,7 @@ def signin():
             logged_user = ''
             logged_user = User.query.filter(User.email == email).first()
             
-            if logged_user == ''
+            if logged_user == '':
                 flash('User not found. Please try again.', 'auth-failed')
                         
             elif check_password_hash(logged_user.password, password):
