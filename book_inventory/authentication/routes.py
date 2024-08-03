@@ -42,14 +42,14 @@ def signin():
             logged_user = User.query.filter(User.email == email).first()
             
             if logged_user == '':
-                flash('User not found. Please try again.', 'auth-failed')
+                flash('User not found. Please try again.', 'error')
                         
             elif check_password_hash(logged_user.password, password):
                 login_user(logged_user)
                 flash('You were successfully logged in.', 'auth-success')
                 return redirect(url_for('site.home'))
             
-            flash('Your password is incorrect.', 'auth-failed')
+            flash('Your password is incorrect.', 'error')
             return redirect(url_for('auth.signin'))
     except:
         raise Exception("That didn't work. Please try again.")
