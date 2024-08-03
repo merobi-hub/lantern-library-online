@@ -21,7 +21,7 @@ def signup():
             db.session.add(user)
             db.session.commit()
 
-            flash(f'A user account for {email} has been created successfully', 'user-created')
+            flash(f'A user account for {email} has been created successfully.', 'user-created')
 
             return redirect(url_for('site.home'))
 
@@ -37,20 +37,20 @@ def signin():
         if request.method == 'POST' and form.validate_on_submit():
             email = form.email.data
             password = form.password.data
-            print(email, password)
-
-            try:  
-                logged_user = User.query.filter(User.email == email).first()
-            except:
+  
+            logged_user = ''
+            logged_user = User.query.filter(User.email == email).first()
+            
+            if logged_user == ''
                 flash('User not found. Please try again.', 'auth-failed')
                         
-            if logged_user and check_password_hash(logged_user.password, password):
+            elif check_password_hash(logged_user.password, password):
                 login_user(logged_user)
-                flash('You were successfully logged in', 'auth-success')
+                flash('You were successfully logged in.', 'auth-success')
                 return redirect(url_for('site.home'))
-            else:
-                flash('Your email and/or password is incorrect', 'auth-failed')
-                return redirect(url_for('auth.signin'))
+            
+            flash('Your password is incorrect.', 'auth-failed')
+            return redirect(url_for('auth.signin'))
     except:
         raise Exception("That didn't work. Please try again.")
 
