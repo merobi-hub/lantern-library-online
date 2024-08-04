@@ -40,14 +40,14 @@ def signin():
                 logged_user = User(email, password = password)
                 db.session.get(logged_user).first()
             except DBAPIError:
-                flash('User not found. Please try again.', 'auth-failure')
+                flash('User not found. Please try again.', 'error')
                         
-            elif check_password_hash(logged_user.password, password):
+            if check_password_hash(logged_user.password, password):
                 login_user(logged_user)
                 flash('You were successfully logged in.', 'auth-success')
                 return redirect(url_for('site.home'))
             
-            flash('Your password is incorrect.', 'auth-failure')
+            flash('Your password is incorrect.', 'error')
             return redirect(url_for('auth.signin'))
     except:
         raise Exception("That didn't work. Please try again.")
