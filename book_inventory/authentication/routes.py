@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from book_inventory.models import User, db, check_password_hash
 from book_inventory.forms import UserLoginForm
-from flask_sqlalchemy import SQLAlchemyError
+from sqlalchemy import SQLAlchemyError
 
 from flask_login import login_user, logout_user, current_user, login_required
 
