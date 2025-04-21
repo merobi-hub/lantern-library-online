@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from book_inventory.models import User, db, check_password_hash
 from book_inventory.forms import UserLoginForm
-from sqlalchemy import SQLAlchemyError
 
 from flask_login import login_user, logout_user, current_user, login_required
 
@@ -39,7 +38,7 @@ def signin():
             try:
                 logged_user = User(email, password = password)
                 db.session.get(logged_user).first()
-            except SQLAlchemyError:
+            except:
                 flash('User not found. Please try again.', 'error')
                         
             if check_password_hash(logged_user.password, password):
