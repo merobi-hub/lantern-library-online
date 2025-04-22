@@ -9,6 +9,8 @@ lblog = Blueprint('lblog', __name__, template_folder='blog_templates')
 @login_required
 def blog():
     posts = Post.query.all()
+    for post in posts:
+        post.date_created = post.date_created.strftime('%a %d %b %Y, %I:%M%p')
     return render_template('blog.html', posts = posts)
 
 @lblog.route('/createpost', methods = ['GET', 'POST'])

@@ -6,7 +6,7 @@ from .catalog.routes import catalog
 from .blog.routes import lblog
 #from .api.routes import api
 from flask_migrate import Migrate
-from book_inventory.models import db as root_db, login_manager, ma 
+from book_inventory.models import db as root_db, login_manager
 from flask_sqlalchemy import SQLAlchemy
 
 #Do I need CORS?

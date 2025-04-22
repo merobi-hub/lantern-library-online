@@ -1,9 +1,9 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Email
-from flask_login import UserMixin
+import flask_login
 
-class UserLoginForm(FlaskForm,UserMixin):
+class UserLoginForm(FlaskForm, flask_login.UserMixin):
     #username = StringField('Username', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])

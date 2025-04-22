@@ -9,10 +9,9 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-6" id="about-text">
                 <p>
-                    Lantern Free Library Online provides a way for users of the 
-                    Little Free Library® on Lantern Lane in Barrington, RI, to see
-                    the current inventory before they visit. Users can also track
-                    their donations and share information about books or other
+                    Lantern Free Library Online is a platform for viewing, managing, and discussing 
+                    the inventory of a Little Free Library® in Rhode Island. Users can track
+                    their donations and talk about books or other
                     topics on the <a href="{{ url_for('lblog.blog')}}"><b>blog</b></a>. 
                     Note: Little Free Library® is a trademark of the Little Free
                     Library non-profit organization, which does not sponsor, authorize
@@ -24,36 +23,35 @@
                     on user input about donations and receipts. When donating, all a 
                     user needs to do is click on the "Add a Book" button in the 
                     catalog and enter the author and title. The app adds the book to 
-                    the inventory and uses the author/title information to search a 
-                    database for additional metadata about the title, such as the 
-                    publication date and a description of the book. This data may
-                    not accurately describe the edition in the library, but users
-                    can edit the records for their donations in the 
+                    the inventory and uses the author and title information to query the Google Books API 
+                    for additional metadata about the title, such as a cover image, the 
+                    publication date, and a description of the book. As this data might
+                    not accurately describe the particular copy in the library, users
+                    can also edit the records for their donations in the 
                     <a href="{{ url_for('site.profile')}}"><b>profile</b></a> section 
                     if they wish. 
                 </p>
                 <p>
                     When "borrowing" a book, all a user needs to do is click on the 
-                    "Remove" button on a title in the catalog. This removes the book 
+                    "Remove" button on a title in the catalog. This helps keep the catalog current by removing the book 
                     from the inventory.
                 </p>
                 <h3 class="about-heading">Tech Specs</h3>
                 <p>
                     Lantern Free Library Online is a Python Web app on a Flask framework
-                    with a Gunicorn server and a SQLAlchemy/Psycopg2 backend. Werkzeug 
+                    with a SQLAlchemy/Psycopg2 backend. Werkzeug 
                     encryption secures user login information. URLLib and Regex facilitate the 
                     app's interaction with the Google Books API. On the front end, Flask 
                     WTF handles the forms, and Jinja2 templates and Bootstrap 4.0 
-                    components (cards, rows, and columns) supplement the HTML5/CSS3. During
-                    development, Virtual Studio Code and PGAdmin4 were used to write the 
-                    code and create the database, respectively.
+                    components (cards, rows, and columns) supplement the HTML5/CSS3. Hosting is
+                    on Heroku.
                 </p>
                 <h3 class="about-heading">Contact</h3>
                 <p>
                     Questions, concerns or suggestions? Email 
                     <a href="emailto:merobi@gmail.com"><nobr><b>Michael Robinson</b></nobr></a>. 
                     Also, follow him on 
-                    <a href="https://github.com/merobi-hub"><b>Github</b></a>! 
+                    <a href="https://github.com/merobi-hub"><b>GitHub</b></a>! 
                 </p>
 
             </div>

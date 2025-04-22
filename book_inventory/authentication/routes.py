@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, flash
+from flask.helpers import url_for
 from book_inventory.models import User, db, check_password_hash
 from book_inventory.forms import UserLoginForm
 
@@ -35,21 +36,19 @@ def signin():
             email = form.email.data
             password = form.password.data
   
-            try:
-                logged_user = User(email, password = password)
-                db.session.get(logged_user).first()
-            except:
-                flash('User not found. Please try again.', 'error')
-                        
-            if check_password_hash(logged_user.password, password):
+            logged_user = User.query.filter(User.email == email).first()
+
+            if logged_user and check_password_hash(logged_user.password, password):
                 login_user(logged_user)
                 flash('You were successfully logged in.', 'auth-success')
                 return redirect(url_for('site.home'))
-            
-            flash('Your password is incorrect.', 'error')
-            return redirect(url_for('auth.signin'))
+
+            else:
+                flash('Email or password is incorrect. Please try again.', 'auth-failed')
+                return redirect(url_for('auth.signin'))
+
     except:
-        raise Exception("That didn't work. Please try again.")
+        raise Exception('An error occurred. Please try again.')
 
     return render_template('signin.html', form = form)
 

@@ -31,14 +31,12 @@
                     <div class="col-xs-12 col-sm-12" id="catalog-title">
                         <h1>Library Catalog</h1>
                         <a href="{{ url_for('catalog.addbook') }}" class="btn btn-primary" id="catalog-title-button"><h3>Add a Book</h3></a>
-                        <!-- <h6>Click on Add Your Donation to add a donation to the catalog.</h6>t
-                        <h6>Click on Remove to update the catalog when you take book.</h6> -->
                     </div>
                 </div>
             </div>
             {% for book in books %}
             <div class="row" id="card-row">
-                <div class="card" style="max-width: 37.5rem;">
+                <div class="card" style="width: 37.5rem;">
                     <div class="row g-0">
                         <div class="col-md-4">
                             <img src="{{ book.image }}" id="bookcover-thumbnail" alt="bookcover thumbnail">    
@@ -62,7 +60,7 @@
             {% endfor %}
             {% for book in history %} 
             <div class="row" id="card-row">
-                <div class="card" style="max-width: 37.5rem; background-color: darkgray;">
+                <div class="card" style="width: 37.5rem; background-color: darkgray;">
                     <div class="row g-0">
                         <div class="col-md-4">
                             <img src="{{ book.image }}" id="bookcover-thumbnail" alt="bookcover thumbnail">    

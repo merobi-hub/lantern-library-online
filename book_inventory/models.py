@@ -11,12 +11,9 @@ import secrets
 #3 import for flask login class
 from flask_login import UserMixin, LoginManager 
 
-#install marshaller
-from flask_marshmallow import Marshmallow
-
 db = SQLAlchemy() #init db class instance
 login_manager = LoginManager() #inst LM class as var
-ma = Marshmallow()
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -28,8 +25,8 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String, nullable = False, default = '')
 
     def __init__(self, email, id = '', password = ''):
-        self.id = self.set_id()
         self.email = email
+        self.id = self.set_id()
         self.password = self.set_password(password)
  
     def set_id(self):
