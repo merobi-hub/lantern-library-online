@@ -13,7 +13,7 @@ def signup():
     try:
         if request.method == 'POST' and form.validate_on_submit():
             email = form.email.data 
-            password = form.password.data 
+            password = form.password.data
 
             user = User(email, password = password)
             db.session.add(user)
@@ -24,7 +24,8 @@ def signup():
             return redirect(url_for('site.home'))
 
     except:
-        raise Exception("That didn't work. Please try again.")
+        flash("That didn't work. Please try again.", 'auth-failed')
+        return redirect(url_for('auth.signin'))
 
     return render_template('signup.html', form = form)
 
